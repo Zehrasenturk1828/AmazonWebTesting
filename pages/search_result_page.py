@@ -1,8 +1,5 @@
-import time
 import pytest
-import logging
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from pages.constants.search_result_constants import *
 from pages.base_page import BasePage
