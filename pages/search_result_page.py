@@ -10,6 +10,7 @@ from pages.base_page import BasePage
 @pytest.mark.usefixtures("setup")
 
 class SearchResultPage(BasePage):
+    FIND_PRODUCT = (By.CSS_SELECTOR, 'div .a-size-base-plus.a-color-base.a-text-normal')
     def __init__(self,driver):
         super().__init__(driver)
         self.driver = driver
@@ -27,23 +28,10 @@ class SearchResultPage(BasePage):
         nav_button = self.wait_element_visibility(PAGINATION_BUTTON_2)
         return nav_button.text
 
-    def click_a_product(self):
-        try:
-            spl = WebDriverWait(self.driver, 20).until(EC.presence_of_element_located(SPONSORED_LOC))
-            print("Dinamik öğe bulundu")
-            self.driver.execute_script("arguments[0].style.display = 'none';", spl)
-            print("Dinamik öğe kaldırıldı")
-        except TimeoutError:
-            print("Dinamik öğe bulunamadı")
-        max_attempts = 3
-        for attempt in range(max_attempts):
-            try:
-                product = self.driver.find_element(By.XPATH, "//div[@data-component-type='s-search-result'][21]")
-                product.click()
-                logging.info("Tıklama başarılı.")
-                print("Tıklama başarılı.")
-                break
-            except Exception as e:
-                logging.error(f"Tıklama başarısız, deneme {attempt+1}: {str(e)}")
-                print(f"Tıklama başarısız, deneme {attempt+1}: {str(e)}")
-                time.sleep(1)
+    def click_a_product(self, index):
+        products = self.find_elements(self.FIND_PRODUCT)
+        if products:
+            index_to_click = min(index, len(products) - 1)
+            products[index_to_click].click()
+        else:
+            raise Exception("No products found on the search results page.")

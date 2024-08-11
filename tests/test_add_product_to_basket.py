@@ -19,10 +19,13 @@ class TestCheckofProductAddtoBasket(softest.TestCase):
         search_result_page.verify_result_page()
         search_result_page.click_second_page()
         #self.assertEqual("2", search_result_page.verify_page_number(), "Beklenen sayfa eşleşmedi")
-        time.sleep(2)
-        search_result_page.click_a_product()
+        try:
+            search_result_page.click_a_product(16)
+        except IndexError as e:
+            print(f"IndexError: {e}")
+            self.fail(f"Test failed due to index error: {e}")
 
-        # product_details_page = ProductDetailsPage(self.driver)
-        # assert product_details_page.verify_product_details_page() is not None, "Ürün Detay sayfasında olunduğu doğrulandı"
+        product_details_page = ProductDetailsPage(self.driver)
+        product_details_page.verify_product_details_page()
 
 
