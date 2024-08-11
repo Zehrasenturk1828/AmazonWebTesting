@@ -19,11 +19,7 @@ class TestCheckofProductAddtoBasket(softest.TestCase):
         search_result_page.verify_result_page()
         search_result_page.click_second_page()
         self.assertEqual("2", search_result_page.verify_page_number(), "Expected page didn't match.")
-        try:
-            search_result_page.click_a_product(16)
-        except IndexError as e:
-            print(f"IndexError: {e}")
-            self.fail(f"Test failed due to index error: {e}")
+        search_result_page.click_a_product(16)
 
         product_details_page = ProductDetailsPage(self.driver)
         product_details_page.verify_product_details_page()
