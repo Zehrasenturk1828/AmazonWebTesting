@@ -15,3 +15,14 @@ class ProductDetailsPage(BasePage):
     def verify_product_details_page(self):
         title = WebDriverWait(self.driver, 20).until(EC.presence_of_element_located(PRODUCT_TITLE))
         return title.text
+    
+    def click_submit_button_to_cart(self):
+        submit_button = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(SUMBIT_BUTTON_TO_CART))
+        submit_button.click()
+
+    def click_go_to_basket_button(self):
+        submit_button = WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(TO_BASKET_BUTTON))
+        submit_button.click()
+
+
+        
